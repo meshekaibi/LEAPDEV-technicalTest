@@ -31,7 +31,7 @@ There will be instructions on how to use the Postman collection file.
 4. Click Variables tab and past the copied api_key from crudcrud.com to Initial Value and Current Value of variable api_key
 ![image](https://user-images.githubusercontent.com/68898560/232936180-4d476459-3984-4ba9-9bbb-b09e8cb9f775.png)
 5. Click Save collection
-<img width="1919" alt="image" src="https://user-images.githubusercontent.com/68898560/232937025-b4df0d5b-129a-40d2-8829-bc3ef97d59f6.png">
+<img width="1919" alt="image" src="https://user-images.githubusercontent.com/68898560/232941542-f9849f15-e5f1-4c14-9064-a5b58a7b32fd.png">
 
 NOTE:
 All Employee properties are set as collection variable. The values can be changed easily from the variable-key value pair and are not hard coded in the request body. 
