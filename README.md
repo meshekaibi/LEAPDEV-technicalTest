@@ -34,4 +34,18 @@ There will be instructions on how to use the Postman collection file.
 <img width="1919" alt="image" src="https://user-images.githubusercontent.com/68898560/232941542-f9849f15-e5f1-4c14-9064-a5b58a7b32fd.png">
 
 NOTE:
-All Employee properties are set as collection variable. The values can be changed easily from the variable-key value pair and are not hard coded in the request body. 
+All Employee properties are set as collection variable. The values can be changed easily from the variable-key value pair and are not hard coded in the request body.
+
+# How to run the collection runner
+1. In Postman and click LEAP-Technical_Test collection
+<img width="482" alt="image" src="https://user-images.githubusercontent.com/68898560/232941833-a0ad7e05-4fa9-4c70-beb6-6e573eb9ee9d.png">
+2. Click "Run" icon
+<img width="1930" alt="image" src="https://user-images.githubusercontent.com/68898560/232942045-d865beba-6e39-4e6d-abcd-e62c897e4b73.png">
+3. Click "Run LEAP-Technical_Test" button
+![image](https://user-images.githubusercontent.com/68898560/232942136-a3bee4a8-cbed-4525-bb88-072adb8764f1.png)
+4. View the result 
+![image](https://user-images.githubusercontent.com/68898560/232942349-b3856051-82be-46a3-8824-18242562099f.png)
+
+NOTE:
+Post request with name of "POST FirstName value as Integer" has failed in testing because https://crudcrud.com/ does not support schema validation in post requests. 
+
