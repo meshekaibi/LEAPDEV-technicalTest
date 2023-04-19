@@ -1,0 +1,1242 @@
+{
+	"info": {
+		"_postman_id": "a07279bd-ccf0-4b30-8a03-fe730f8ab7fc",
+		"name": "LEAP-Techical_Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Employee CRUD Positive Scenarios",
+			"item": [
+				{
+					"name": "Create Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// creating a variable for the schema object\r",
+									"const schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"properties\": {\r",
+									"        \"FirstName\": {\"type\": \"string\"},\r",
+									"        \"LastName\": {\"type\": \"string\"},\r",
+									"        \"DateOfBirth\": {\"type\": \"string\"},\r",
+									"        \"StartDate\": {\"type\": \"string\"},\r",
+									"        \"Department\": {\"type\": \"string\"},\r",
+									"        \"JobTitle\": {\"type\": \"string\"},\r",
+									"        \"Email\": {\"type\": \"string\"},\r",
+									"        \"Mobile\": {\"type\": \"string\"},\r",
+									"        \"Address\": {\"type\": \"string\"},\r",
+									"        \"BaseSalary\": {\"type\": \"number\"},\r",
+									"    },\r",
+									"    \"required\": [\r",
+									"        \"FirstName\",\r",
+									"        \"LastName\",\r",
+									"        \"DateOfBirth\",\r",
+									"        \"StartDate\",\r",
+									"        \"Department\",\r",
+									"        \"JobTitle\",\r",
+									"        \"Email\",\r",
+									"        \"Mobile\",\r",
+									"        \"Address\",\r",
+									"        \"BaseSalary\"\r",
+									"    ]\r",
+									"};\r",
+									"\r",
+									"// validating the schema on the response payload\r",
+									"pm.test(\"Schema is successfully validated by the Response\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"// handle errors if status code is not 201\r",
+									"try{\r",
+									"    pm.test(\"Employee is successfully created with status code of 201\", () => {\r",
+									"       pm.response.to.have.status(201);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FirstName\": \"{{firstName}}\",\r\n    \"LastName\": \"{{lastName}}\",\r\n    \"DateOfBirth\": \"{{dateOfBirth}}\",\r\n    \"StartDate\": \"{{startDate}}\",\r\n    \"Department\": \"{{department}}\",\r\n    \"JobTitle\": \"{{jobTitle}}\",\r\n    \"Email\": \"{{email}}\",\r\n    \"Mobile\": \"{{mobile}}\",\r\n    \"Address\": \"{{address}}\",\r\n    \"BaseSalary\": {{baseSalary}}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read all Employees",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// handle errors if status code is not 200\r",
+									"try{\r",
+									"    pm.test(\"Get employee request is successful with status code of 200\", () => {\r",
+									"       pm.response.to.have.status(200);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }\r",
+									"\r",
+									"// shows the number of employees in the database\r",
+									"const responseData = pm.response.json();\r",
+									"pm.test(\"The number of employees in database is \" + responseData.length, () => {\r",
+									"    pm.expect(responseData).to.not.be.undefined;\r",
+									"})\r",
+									"\r",
+									"// setting the employee_id to a collection variable to be passed on the next endpoint\r",
+									"pm.collectionVariables.set(\"employee_id\", responseData[0]._id);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Single Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// handle errors if status code is not 200\r",
+									"try{\r",
+									"    pm.test(\"Get single employee request is successful with status code of 200\", () => {\r",
+									"       pm.response.to.have.status(200);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }\r",
+									"\r",
+									"\r",
+									"// asserting that the employee id is the same as the response payload \r",
+									"const responseData = pm.response.json();\r",
+									"pm.test(\"employee_id is same as the payload which is \" + responseData._id, () => {\r",
+									"    const employee_id = pm.collectionVariables.get(\"employee_id\");\r",
+									"    pm.expect(responseData._id).to.contain(employee_id);\r",
+									"})\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{employee_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee",
+								"{{employee_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update FirstName and LastName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// handle errors if status code is not 200\r",
+									"try{\r",
+									"    pm.test(\"Employee is successfully updated with status code of 200\", () => {\r",
+									"       pm.response.to.have.status(200);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FirstName\": \"{{updatedFirstName}}\",\r\n    \"LastName\": \"{{updatedLastName}}\",\r\n    \"DateOfBirth\": \"{{dateOfBirth}}\",\r\n    \"StartDate\": \"{{startDate}}\",\r\n    \"Department\": \"{{department}}\",\r\n    \"JobTitle\": \"{{jobTitle}}\",\r\n    \"Email\": \"{{email}}\",\r\n    \"Mobile\": \"{{mobile}}\",\r\n    \"Address\": \"{{address}}\",\r\n    \"BaseSalary\": {{baseSalary}}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{employee_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee",
+								"{{employee_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Single Employee and Confirm it is updated",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"// Asserting that the FirstName is updated successfully from the previous endpoint call\r",
+									"const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Confirm that First Name is updated\", () => {    \r",
+									"    const updatedFirstName = pm.collectionVariables.get(\"updatedFirstName\");\r",
+									"    pm.expect(responseData.FirstName).to.contain(updatedFirstName);\r",
+									"});\r",
+									"\r",
+									"// Asserting that the LastName is updated successfully from the previous endpoint call\r",
+									"pm.test(\"Confirm that Last Name is updated\", () => {\r",
+									"    const updatedLastName = pm.collectionVariables.get(\"updatedLastName\");\r",
+									"    pm.expect(responseData.LastName).to.contain(updatedLastName);\r",
+									"});\r",
+									"\r",
+									"// handle errors if status code is not 200\r",
+									"try{\r",
+									"    pm.test(\"Get Updated employee with status code of 200\", () => {\r",
+									"       pm.response.to.have.status(200);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{employee_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee",
+								"{{employee_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// handle errors if status code is not 200\r",
+									"try{\r",
+									"    pm.test(\"Employee is successfully deleted with status code of 200\", () => {\r",
+									"       pm.response.to.have.status(200);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{employee_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee",
+								"{{employee_id}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Single user is deleted",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// handle errors if status code is not 404\r",
+									"try{\r",
+									"    pm.test(\"Employee is not found in the database with status code of 404\", () => {\r",
+									"       pm.response.to.have.status(404);\r",
+									"    })}\r",
+									"catch(Error) {\r",
+									"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+									"    }"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{employee_id}}",
+							"protocol": "https",
+							"host": [
+								"crudcrud",
+								"com"
+							],
+							"path": [
+								"api",
+								"{{api_key}}",
+								"employee",
+								"{{employee_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Negative Scenarios",
+			"item": [
+				{
+					"name": "Failed schema validation as a value is missing",
+					"item": [
+						{
+							"name": "Missing BaseSalary Value",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// creating a variable for the schema object\r",
+											"const schema = {\r",
+											"    \"type\": \"object\",\r",
+											"    \"properties\": {\r",
+											"        \"FirstName\": {\"type\": \"string\"},\r",
+											"        \"LastName\": {\"type\": \"string\"},\r",
+											"        \"DateOfBirth\": {\"type\": \"string\"},\r",
+											"        \"StartDate\": {\"type\": \"string\"},\r",
+											"        \"Department\": {\"type\": \"string\"},\r",
+											"        \"JobTitle\": {\"type\": \"string\"},\r",
+											"        \"Email\": {\"type\": \"string\"},\r",
+											"        \"Mobile\": {\"type\": \"string\"},\r",
+											"        \"Address\": {\"type\": \"string\"},\r",
+											"        \"BaseSalary\": {\"type\": \"number\"},\r",
+											"    },\r",
+											"    \"required\": [\r",
+											"        \"FirstName\",\r",
+											"        \"LastName\",\r",
+											"        \"DateOfBirth\",\r",
+											"        \"StartDate\",\r",
+											"        \"Department\",\r",
+											"        \"JobTitle\",\r",
+											"        \"Email\",\r",
+											"        \"Mobile\",\r",
+											"        \"Address\",\r",
+											"        \"BaseSalary\"\r",
+											"    ]\r",
+											"};\r",
+											"\r",
+											"// validating the schema validaton has failed the response payload\r",
+											"pm.test(\"Response had failed in schema validation\", () => {\r",
+											"    pm.response.to.not.have.jsonSchema(schema);\r",
+											"});\r",
+											"\r",
+											"// handle errors if status code is not 400\r",
+											"try{\r",
+											"    pm.test(\"Employee is not created, status code is 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"John\",\r\n    \"LastName\": \"Doe\",\r\n    \"DateOfBirth\": \"01-01-2000\",\r\n    \"StartDate\": \"01-01-2023\",\r\n    \"Department\": \"QA Department\",\r\n    \"JobTitle\": \"QA Engineer\",\r\n    \"Email\": \"john.doe@gmail.com\",\r\n    \"Mobile\": \"0450111111\",\r\n    \"Address\": \"Sydney CBD, 2000\",\r\n    \"BaseSalary\": \r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{api_key}}/employee",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{api_key}}",
+										"employee"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Failed schema validation as object type is not correct",
+					"item": [
+						{
+							"name": "FirstName value as Integer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// creating a variable for the schema object\r",
+											"const schema = {\r",
+											"    \"type\": \"object\",\r",
+											"    \"properties\": {\r",
+											"        \"FirstName\": {\"type\": \"string\"},\r",
+											"        \"LastName\": {\"type\": \"string\"},\r",
+											"        \"DateOfBirth\": {\"type\": \"string\"},\r",
+											"        \"StartDate\": {\"type\": \"string\"},\r",
+											"        \"Department\": {\"type\": \"string\"},\r",
+											"        \"JobTitle\": {\"type\": \"string\"},\r",
+											"        \"Email\": {\"type\": \"string\"},\r",
+											"        \"Mobile\": {\"type\": \"string\"},\r",
+											"        \"Address\": {\"type\": \"string\"},\r",
+											"        \"BaseSalary\": {\"type\": \"number\"},\r",
+											"    },\r",
+											"    \"required\": [\r",
+											"        \"FirstName\",\r",
+											"        \"LastName\",\r",
+											"        \"DateOfBirth\",\r",
+											"        \"StartDate\",\r",
+											"        \"Department\",\r",
+											"        \"JobTitle\",\r",
+											"        \"Email\",\r",
+											"        \"Mobile\",\r",
+											"        \"Address\",\r",
+											"        \"BaseSalary\"\r",
+											"    ]\r",
+											"};\r",
+											"\r",
+											"// validating the schema validaton has failed the response payload\r",
+											"pm.test(\"Response had failed in schema validation\", () => {    \r",
+											"    pm.response.to.not.have.jsonSchema(schema);\r",
+											"});\r",
+											"\r",
+											"// handle errors if status code is not 400\r",
+											"// in a production environment, this is a bug because the user must not be created if it had failed the schema validation\r",
+											"try{\r",
+											"    pm.test(\"Employee is not created, status code is 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }\r",
+											"\r",
+											"\r",
+											"// setting the employee_id to a collection variable to be passed on the next endpoint\r",
+											"const responseData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"employee_id\", responseData._id);\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": 100,\r\n    \"LastName\": \"Doe\",\r\n    \"DateOfBirth\": \"01-01-2000\",\r\n    \"StartDate\": \"01-01-2023\",\r\n    \"Department\": \"QA Department\",\r\n    \"JobTitle\": \"QA Engineer\",\r\n    \"Email\": \"john.doe@gmail.com\",\r\n    \"Mobile\": \"0450111111\",\r\n    \"Address\": \"Sydney CBD, 2000\",\r\n    \"BaseSalary\": 100000\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{api_key}}/employee",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{api_key}}",
+										"employee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Employee",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 200\r",
+											"try{\r",
+											"    pm.test(\"Employee is successfully deleted with status code of 200\", () => {\r",
+											"       pm.response.to.have.status(200);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{employee_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{api_key}}",
+										"employee",
+										"{{employee_id}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Failed Get employee request as user is not existing",
+					"item": [
+						{
+							"name": "Read Single Employee using invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 404\r",
+											"try{\r",
+											"    pm.test(\"Failed Getting single employee, invalid id is used with status code of 404\", () => {\r",
+											"       pm.response.to.have.status(404);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{invalid_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{api_key}}",
+										"employee",
+										"{{invalid_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Failed to update employee as user is not existing",
+					"item": [
+						{
+							"name": "Update FirstName and LastName using invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 404\r",
+											"try{\r",
+											"    pm.test(\"Failed updating employee, invalid id is used with status code of 404\", () => {\r",
+											"       pm.response.to.have.status(404);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"{{updatedFirstName}}\",\r\n    \"LastName\": \"{{updatedLastName}}\",\r\n    \"DateOfBirth\": \"{{dateOfBirth}}\",\r\n    \"StartDate\": \"{{startDate}}\",\r\n    \"Department\": \"{{department}}\",\r\n    \"JobTitle\": \"{{jobTitle}}\",\r\n    \"Email\": \"{{email}}\",\r\n    \"Mobile\": \"{{mobile}}\",\r\n    \"Address\": \"{{address}}\",\r\n    \"BaseSalary\": {{baseSalary}}\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{invalid_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{api_key}}",
+										"employee",
+										"{{invalid_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Failed to delete employee as user is not existing",
+					"item": [
+						{
+							"name": "Update FirstName and LastName using invalid id",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 404\r",
+											"try{\r",
+											"    pm.test(\"Failed to delete employee, invalid id is used with status code of 404\", () => {\r",
+											"       pm.response.to.have.status(404);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"{{updatedFirstName}}\",\r\n    \"LastName\": \"{{updatedLastName}}\",\r\n    \"DateOfBirth\": \"{{dateOfBirth}}\",\r\n    \"StartDate\": \"{{startDate}}\",\r\n    \"Department\": \"{{department}}\",\r\n    \"JobTitle\": \"{{jobTitle}}\",\r\n    \"Email\": \"{{email}}\",\r\n    \"Mobile\": \"{{mobile}}\",\r\n    \"Address\": \"{{address}}\",\r\n    \"BaseSalary\": {{baseSalary}}\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{api_key}}/employee/{{invalid_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{api_key}}",
+										"employee",
+										"{{invalid_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Failed all calls because invalid api key is used",
+					"item": [
+						{
+							"name": "FAIL - Create Employee",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 400\r",
+											"try{\r",
+											"    pm.test(\"Failed to create employee, invalid api key with status code of 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"{{firstName}}\",\r\n    \"LastName\": \"{{lastName}}\",\r\n    \"DateOfBirth\": \"{{dateOfBirth}}\",\r\n    \"StartDate\": \"{{startDate}}\",\r\n    \"Department\": \"{{department}}\",\r\n    \"JobTitle\": \"{{jobTitle}}\",\r\n    \"Email\": \"{{email}}\",\r\n    \"Mobile\": \"{{mobile}}\",\r\n    \"Address\": \"{{address}}\",\r\n    \"BaseSalary\": {{baseSalary}}\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{invalid_api_key}}/employee",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{invalid_api_key}}",
+										"employee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FAIL - Read all Employees",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 400\r",
+											"try{\r",
+											"    pm.test(\"Failed to get employees, invalid api key with status code of 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{invalid_api_key}}/employee",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{invalid_api_key}}",
+										"employee"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FAIL - Read Single Employee",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 400\r",
+											"try{\r",
+											"    pm.test(\"Failed to get single employee, invalid api key with status code of 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{invalid_api_key}}/employee/{{employee_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{invalid_api_key}}",
+										"employee",
+										"{{employee_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FAIL - Update FirstName and LastName",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 400\r",
+											"try{\r",
+											"    pm.test(\"Failed to update employees, invalid api key with status code of 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"{{updatedFirstName}}\",\r\n    \"LastName\": \"{{updatedLastName}}\",\r\n    \"DateOfBirth\": \"{{dateOfBirth}}\",\r\n    \"StartDate\": \"{{startDate}}\",\r\n    \"Department\": \"{{department}}\",\r\n    \"JobTitle\": \"{{jobTitle}}\",\r\n    \"Email\": \"{{email}}\",\r\n    \"Mobile\": \"{{mobile}}\",\r\n    \"Address\": \"{{address}}\",\r\n    \"BaseSalary\": {{baseSalary}}\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://crudcrud.com/api/{{invalid_api_key}}/employee/{{employee_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{invalid_api_key}}",
+										"employee",
+										"{{employee_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FAIL - Delete Employee Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// handle errors if status code is not 400\r",
+											"try{\r",
+											"    pm.test(\"Failed to delete employee, invalid api key with status code of 400\", () => {\r",
+											"       pm.response.to.have.status(400);\r",
+											"    })}\r",
+											"catch(Error) {\r",
+											"        pm.test(\"FAIL\", () => {throw new Error(e.message)});\r",
+											"    }"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "default",
+										"disabled": true
+									}
+								],
+								"url": {
+									"raw": "https://crudcrud.com/api/{{invalid_api_key}}/employee/{{employee_id}}",
+									"protocol": "https",
+									"host": [
+										"crudcrud",
+										"com"
+									],
+									"path": [
+										"api",
+										"{{invalid_api_key}}",
+										"employee",
+										"{{employee_id}}"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_key",
+			"value": "f7e77e0dfc8c463ca4b27d1865736f12",
+			"type": "default"
+		},
+		{
+			"key": "firstName",
+			"value": "John",
+			"type": "default"
+		},
+		{
+			"key": "lastName",
+			"value": "Doe",
+			"type": "default"
+		},
+		{
+			"key": "dateOfBirth",
+			"value": "01-01-2000",
+			"type": "default"
+		},
+		{
+			"key": "startDate",
+			"value": "01-01-2023",
+			"type": "default"
+		},
+		{
+			"key": "department",
+			"value": "QA Department",
+			"type": "default"
+		},
+		{
+			"key": "jobTitle",
+			"value": "QA Engineer",
+			"type": "default"
+		},
+		{
+			"key": "email",
+			"value": "john.doe@gmail.com",
+			"type": "default"
+		},
+		{
+			"key": "mobile",
+			"value": "0450111111",
+			"type": "default"
+		},
+		{
+			"key": "address",
+			"value": "Sydney CBD, 2000",
+			"type": "default"
+		},
+		{
+			"key": "baseSalary",
+			"value": "110000",
+			"type": "default"
+		},
+		{
+			"key": "updatedFirstName",
+			"value": "Johnny",
+			"type": "default"
+		},
+		{
+			"key": "updatedLastName",
+			"value": "Bravo",
+			"type": "default"
+		},
+		{
+			"key": "employee_id",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "invalid_id",
+			"value": "00000b406246ac03e8534017",
+			"type": "default"
+		},
+		{
+			"key": "invalid_api_key",
+			"value": "00000e0dfc8c463ca4b27d1865736f12",
+			"type": "default"
+		}
+	]
+}
