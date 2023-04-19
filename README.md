@@ -40,11 +40,11 @@ All Employee properties are set as collection variable. The values can be change
 1. In Postman and click LEAP-Technical_Test collection
 <img width="482" alt="image" src="https://user-images.githubusercontent.com/68898560/232941833-a0ad7e05-4fa9-4c70-beb6-6e573eb9ee9d.png">
 2. Click "Run" icon
-<img width="1930" alt="image" src="https://user-images.githubusercontent.com/68898560/232942045-d865beba-6e39-4e6d-abcd-e62c897e4b73.png">
+<img width="1930" alt="image" src="https://user-images.githubusercontent.com/68898560/232943322-71224863-5985-466a-a587-1e129df8bcc8.png">
 3. Click "Run LEAP-Technical_Test" button
-![image](https://user-images.githubusercontent.com/68898560/232942136-a3bee4a8-cbed-4525-bb88-072adb8764f1.png)
+![image](https://user-images.githubusercontent.com/68898560/232943347-4bd0ff19-c729-471b-93ef-ab5e9dad83ee.png)
 4. View the result 
-![image](https://user-images.githubusercontent.com/68898560/232942349-b3856051-82be-46a3-8824-18242562099f.png)
+![image](https://user-images.githubusercontent.com/68898560/232943402-55df611a-0af8-401e-a6cf-4c6c0d8100f1.png)
 
 NOTE:
 Post request with name of "POST FirstName value as Integer" has failed in testing because https://crudcrud.com/ does not support schema validation in post requests. 
