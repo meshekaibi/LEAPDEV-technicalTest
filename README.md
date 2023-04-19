@@ -6,4 +6,5 @@ This repository contains a Postman collection file that can be imported to Postm
 
 There will be instructions on how to use the Postman collection file. 
 
-
+# How to import the collection file in Postman
+1. You can download the repository 
