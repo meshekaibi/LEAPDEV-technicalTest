@@ -28,7 +28,7 @@ There will be instructions on how to use the Postman collection file.
 ![image](https://user-images.githubusercontent.com/68898560/232935801-4e5399cb-efc2-465a-9cf5-be90e5c2f7e9.png)
 3. Go back to Postman and click LEAP-Technical_Test collection
 ![image](https://user-images.githubusercontent.com/68898560/232935903-56177739-c0b6-4320-95a4-7ddec0de8409.png)
-4. Click Variables tab and past the copied api_key from crudcrud.com to Initial Value and Current Value of variable api_key
+4. Click Variables tab and paste the copied api_key from crudcrud.com to Initial Value and Current Value of variable api_key
 ![image](https://user-images.githubusercontent.com/68898560/232936180-4d476459-3984-4ba9-9bbb-b09e8cb9f775.png)
 5. Click Save collection
 <img width="1919" alt="image" src="https://user-images.githubusercontent.com/68898560/232941542-f9849f15-e5f1-4c14-9064-a5b58a7b32fd.png">
